@@ -149,3 +149,5 @@ script.py
 #idea
 .idea/
 
+#.json
+*.json

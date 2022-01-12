@@ -4,8 +4,8 @@ import os
 from dotenv import load_dotenv
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from google.cloud import dialogflow
 
-# Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -29,6 +29,32 @@ def echo(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(update.message.text)
 
 
+def neural_reply(update: Update, context: CallbackContext) -> None:
+    reply = detect_intent_text(
+        project_id=os.environ.get("PROJECT_ID"),
+        session_id=os.environ.get("PROJECT_ID"),
+        text=update.message.text,
+        language_code="ru",
+    )
+    update.message.reply_text(reply)
+
+
+def detect_intent_text(project_id, session_id, text, language_code):
+    session_client = dialogflow.SessionsClient()
+
+    session = session_client.session_path(project_id, session_id)
+
+    text_input = dialogflow.TextInput(text=text, language_code=language_code)
+
+    query_input = dialogflow.QueryInput(text=text_input)
+
+    response = session_client.detect_intent(
+        request={"session": session, "query_input": query_input}
+    )
+
+    return response.query_result.fulfillment_text
+
+
 def main() -> None:
     load_dotenv()
     updater = Updater(os.environ.get("TELEGRAM_TOKEN"))
@@ -38,7 +64,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
 
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, neural_reply))
 
     updater.start_polling()
 
