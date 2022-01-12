@@ -25,10 +25,6 @@ def help_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Help!')
 
 
-def echo(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text(update.message.text)
-
-
 def neural_reply(update: Update, context: CallbackContext) -> None:
     reply = detect_intent_text(
         project_id=os.environ.get("PROJECT_ID"),
