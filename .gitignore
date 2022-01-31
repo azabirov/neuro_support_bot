@@ -143,9 +143,6 @@ cython_debug/
 
 .parcel-cache/
 
-# scripts
-script.py
-
 #idea
 .idea/
 
