@@ -1,4 +1,7 @@
 import json
+import urllib.request
+
+import requests
 
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
@@ -34,8 +37,11 @@ def main():
 
     load_dotenv()
 
-    with open("questions.json", "r", encoding="utf-8") as questions_file:
-        questions = json.load(questions_file)
+    url = input("Введите ссылку на json файл:\n")
+    # Пример файла
+    # https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json
+
+    questions = requests.get(url).json()
 
     for question in questions:
         create_intent(
