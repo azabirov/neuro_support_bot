@@ -3,12 +3,27 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 import os
 from dotenv import load_dotenv
 import random
+from bot import detect_intent_text
+
 
 def echo(event, vk_api):
     vk_api.messages.send(
         user_id=event.user_id,
         message=event.text,
         random_id=random.randint(1,1000)
+    )
+
+
+def neural_reply_vk(event, vk_api):
+    vk_api.messages.send(
+        user_id=event.user_id,
+        message=detect_intent_text(
+            project_id=os.environ.get("PROJECT_ID"),
+            session_id=os.environ.get("PROJECT_ID"),
+            text=event.text,
+            language_code="ru",
+        ),
+        random_id=random.randint(1, 1000)
     )
 
 
@@ -23,7 +38,7 @@ if __name__ == "__main__":
         if event.type == VkEventType.MESSAGE_NEW:
             print('Новое сообщение:')
             if event.to_me:
-                echo(event, vk_api)
+                neural_reply_vk(event, vk_api)
                 print('Для меня от: ', event.user_id)
             else:
                 print('От меня для: ', event.user_id)
