@@ -15,17 +15,19 @@ def echo(event, vk_api):
 
 
 def neural_reply_vk(event, vk_api):
-    vk_api.messages.send(
-        user_id=event.user_id,
-        message=detect_intent_text(
+    message=detect_intent_text(
             project_id=os.environ.get("PROJECT_ID"),
             session_id=os.environ.get("PROJECT_ID"),
             text=event.text,
             language_code="ru",
-        ),
-        random_id=random.randint(1, 1000)
+            ignore_fallback=True
     )
-
+    if message:
+        vk_api.messages.send(
+            user_id=event.user_id,
+            message=message,
+            random_id=random.randint(1, 1000)
+        )
 
 load_dotenv()
 

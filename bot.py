@@ -35,7 +35,7 @@ def neural_reply(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(reply)
 
 
-def detect_intent_text(project_id, session_id, text, language_code):
+def detect_intent_text(project_id, session_id, text, language_code, ignore_fallback=False):
     session_client = dialogflow.SessionsClient()
 
     session = session_client.session_path(project_id, session_id)
@@ -47,6 +47,9 @@ def detect_intent_text(project_id, session_id, text, language_code):
     response = session_client.detect_intent(
         request={"session": session, "query_input": query_input}
     )
+
+    if ignore_fallback and response.query_result.intent.is_fallback:
+        return None
 
     return response.query_result.fulfillment_text
 
