@@ -29,7 +29,6 @@ def neural_reply_vk(event, vk_api):
             random_id=random.randint(1, 1000)
         )
 
-load_dotenv()
 
 if __name__ == "__main__":
     vk_session = vk_api.VkApi(token=os.environ.get("VK_TOKEN"))
