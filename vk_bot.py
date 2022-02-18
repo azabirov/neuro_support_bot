@@ -38,10 +38,5 @@ if __name__ == "__main__":
 
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
-            print('Новое сообщение:')
             if event.to_me:
                 neural_reply_vk(event, vk_api)
-                print('Для меня от: ', event.user_id)
-            else:
-                print('От меня для: ', event.user_id)
-            print('Текст:', event.text)
