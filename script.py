@@ -3,7 +3,7 @@ import urllib.request
 import os
 from dotenv import load_dotenv
 import requests
-
+import argparse
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
     from google.cloud import dialogflow
@@ -35,11 +35,19 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
 def main():
     load_dotenv()
 
-    url = input("Введите ссылку на json файл:\n")
+    parser = argparse.ArgumentParser(
+        description='Data that you sent via a JSON file link will be put into DialogFlow project.'
+    )
+    parser.add_argument('link', help='Link to a JSON file')
+    args = parser.parse_args()
+
+    # Передается ссылка на JSON файл с информацией для DialogFlow
     # Пример файла
     # https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json
 
-    questions = requests.get(url).json()
+    response = requests.get(args.link)
+    response.raise_for_status()
+    questions = response.json()
 
     for question in questions:
         create_intent(
