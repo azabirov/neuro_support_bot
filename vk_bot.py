@@ -31,6 +31,8 @@ def neural_reply_vk(event, vk_api):
 
 
 if __name__ == "__main__":
+    load_dotenv()
+
     vk_session = vk_api.VkApi(token=os.environ.get("VK_TOKEN"))
     vk_api = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
