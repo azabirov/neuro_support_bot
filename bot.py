@@ -6,9 +6,6 @@ from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from google.cloud import dialogflow
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +53,11 @@ def detect_intent_text(project_id, session_id, text, language_code, ignore_fallb
 
 def main() -> None:
     load_dotenv()
+
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+    )
+
     updater = Updater(os.environ.get("TELEGRAM_TOKEN"))
 
     dispatcher = updater.dispatcher
