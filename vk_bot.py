@@ -3,7 +3,7 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 import os
 from dotenv import load_dotenv
 import random
-from bot import detect_intent_text
+from telegram_bot import detect_intent_text
 
 
 def echo(event, vk_api):
