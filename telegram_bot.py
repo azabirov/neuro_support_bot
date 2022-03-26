@@ -20,7 +20,7 @@ def start(update: Update, context: CallbackContext) -> None:
 def neural_reply(update: Update, context: CallbackContext) -> None:
     reply = detect_intent_text(
         project_id=os.environ.get("PROJECT_ID"),
-        session_id=os.environ.get("PROJECT_ID"),
+        session_id=f"tgbot-{os.environ.get('PROJECT_ID')}",
         text=update.message.text,
         language_code="ru",
     )
