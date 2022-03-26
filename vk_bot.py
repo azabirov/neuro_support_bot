@@ -6,7 +6,7 @@ import random
 from telegram_bot import detect_intent_text
 
 
-def echo(event, vk_api):
+def send_message(event, vk_api):
     vk_api.messages.send(
         user_id=event.user_id,
         message=event.text,
