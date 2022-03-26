@@ -14,7 +14,7 @@ def echo(event, vk_api):
     )
 
 
-def neural_reply_vk(event, vk_api):
+def reply_vk(event, vk_api):
     message=detect_intent_text(
             project_id=os.environ.get("PROJECT_ID"),
             session_id=os.environ.get("PROJECT_ID"),
@@ -40,4 +40,4 @@ if __name__ == "__main__":
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
-                neural_reply_vk(event, vk_api)
+                reply_vk(event, vk_api)
