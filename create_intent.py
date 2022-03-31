@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import requests
 import argparse
 
+
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
     from google.cloud import dialogflow
 
