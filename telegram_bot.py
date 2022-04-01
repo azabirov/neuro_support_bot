@@ -17,7 +17,7 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
 
-def neural_reply(update: Update, context: CallbackContext) -> None:
+def reply_neural(update: Update, context: CallbackContext) -> None:
     reply = detect_intent_text(
         project_id=os.environ.get("PROJECT_ID"),
         session_id=f"tgbot-{os.environ.get('PROJECT_ID')}",
@@ -41,7 +41,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
 
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, neural_reply))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply_neural))
 
     updater.start_polling()
 
