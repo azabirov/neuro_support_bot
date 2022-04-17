@@ -17,7 +17,7 @@ def send_message(event, vk_api):
 def reply_vk(event, vk_api):
     message=detect_intent_text(
             project_id=os.environ.get("PROJECT_ID"),
-            session_id=f"vkbot-{os.environ.get('PROJECT_ID')}",
+            session_id=f"vkbot-{os.environ.get('VK_TOKEN')}",
             text=event.text,
             language_code="ru",
             ignore_fallback=True
